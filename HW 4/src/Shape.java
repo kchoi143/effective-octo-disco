@@ -11,5 +11,5 @@ public interface Shape {
   boolean contains(int x, int y);
   boolean addLevel();
   boolean removeLevel();
-  void createChildren();
+  boolean createChildren();
 }

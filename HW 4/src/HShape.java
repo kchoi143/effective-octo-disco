@@ -6,7 +6,8 @@ import java.awt.Graphics;
  * H shape
  */
 public class HShape extends AbstractShape {
-
+	
+	int i, j, k;
 	/**
 	 * 
 	 * @param x x coordinate of top left corner 
@@ -21,28 +22,28 @@ public class HShape extends AbstractShape {
 
 	@Override
 	public void draw(Graphics g) {
-		for (int i = 0; i < 3; i++) {
-			for (int j = 0; j < 3; j++) {
-				if ((i == 1 & j == 0) || i == 1 & j == 2) {
-				} else {
-					g.setColor(c);
-					g.drawRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3);
-					g.fillRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3); 
-				}
-			}
+		if (i == 2 && j == 2) {
+			g.setColor(c);
+			g.drawRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3);
+			g.fillRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3);
+			return;
+		} else if ((i == 1 && j == 0) || (i == 1 && j == 2)) {
+			i++;
+			draw(g);
+		} else if (i == 2) {
+			g.setColor(c);
+			g.drawRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3);
+			g.fillRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3);
+			j++;
+			i = 0;
+			draw(g);
+		} else {
+			g.setColor(c);
+			g.drawRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3);
+			g.fillRect(x+(i*(size/3)), y+(j*(size/3)), size/3, size/3);
+			i++;
+			draw(g);
 		}
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if(o!=null && o.getClass() == this.getClass()) {
-			HShape h = (HShape) o;
-			if(this.c == h.c && this.x == h.x && this.y == h.y 
-					&& this.size == h.size) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	@Override
@@ -57,7 +58,19 @@ public class HShape extends AbstractShape {
 	// If a new level could not be added, then the controller displays a message box to the user explaining why
 	// (e.g. "size limit has been reached.")
 	@Override
-	public void createChildren() {
-		
+	public boolean createChildren() {
+		if (children[6] == null) {
+			int size = super.size/3;
+			if (size > 1) {
+				children[k] = new HShape(x, y, c, size);
+				k++;
+				createChildren();
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 }

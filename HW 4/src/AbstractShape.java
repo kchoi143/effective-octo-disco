@@ -21,7 +21,7 @@ public abstract class AbstractShape implements Shape {
 		this.c = c;
 		this.size = size;
 	}
-	
+
 	/**
 	 * Since the model has only a reference to the top level shapes, 
 	 * the method will iterate to get to the last level of the shape 
@@ -34,9 +34,6 @@ public abstract class AbstractShape implements Shape {
 	@Override
 	public boolean addLevel() {
 		if (children[0] == null) {
-			// possibly add a level
-			// write a method createChildren() (declared in Shape
-			// and implemented in Fibonacci and HShape)
 			createChildren();
 		} else {
 			for (Shape child : children) {
@@ -62,7 +59,7 @@ public abstract class AbstractShape implements Shape {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
 	// It should give the type of the shape (FibonacciSquare or HShape available by calling getClass()), 
 	// the coordinates of the shape, its color and its current level.
 	@Override

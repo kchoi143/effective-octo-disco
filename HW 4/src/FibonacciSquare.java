@@ -61,18 +61,6 @@ public class FibonacciSquare extends AbstractShape {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if(o != null && o.getClass() == this.getClass()) {
-			FibonacciSquare f = (FibonacciSquare) o;
-			if(this.c == f.c && this.x == f.x && this.y == f.y 
-					&& this.quadrant == f.quadrant && this.n == f.n) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	@Override
 	public boolean contains(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
@@ -83,7 +71,36 @@ public class FibonacciSquare extends AbstractShape {
 	// If a new level could not be added, then the controller displays a message box to the user explaining why
 	// (e.g. "size limit has been reached.")
 	@Override
-	public void createChildren() {
-		
+	public boolean createChildren() {
+	    int childQ = (this.quadrant+1)%5;
+	    if(childQ == 0) {
+	      childQ=1;
+	    }
+	    System.out.println(childQ);
+	    int childX = this.x;
+	    int childY = this.y;
+	    int childSize = fibonacci(this.n+1);
+	    
+	    switch(childQ) {
+	    case 1:
+	      //"center" the X 
+	      childX-=(childSize-this.size);
+	      childY-=childSize;
+	      break;
+	    case 2:
+	      childX-=childSize;
+	      break;
+	    case 3:
+	      childY+=this.size;
+	      break;
+	    case 4:
+	      childX+=this.size;
+	      //"center" the Y
+	      childY-=(childSize-this.size);
+	      break;
+	    }
+	    
+	    children[0] = new FibonacciSquare(childX, childY, this.c, childQ,this.n+1);
+	    return true;
 	}
 }

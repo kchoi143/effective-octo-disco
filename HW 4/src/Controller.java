@@ -27,6 +27,7 @@ public class Controller extends JPanel implements ActionListener, MouseListener 
 		} else if (e.getActionCommand().contains("Remove")) {
 			addLevel = false;
 		} else {
+			model.reset();
 			// has to be reset
 		}
 	}

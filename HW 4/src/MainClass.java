@@ -61,6 +61,7 @@ public class MainClass {
 	frame.setVisible(true);
 	
 	// Create 10 shapes
+	// (possibly create another shape if one created goes beyond boundaries)
 	Random rand = new Random();
 	for(int i = 1; i <= 10; i ++) {
 		if (Math.random() >= 0.5) {
