@@ -30,34 +30,35 @@ public abstract class AbstractShape implements Shape {
 	 * @return
 	 */
 	public boolean addLevel() {
+		boolean b = false;
 		if (children[0] == null) {
-			return createChildren();
+			b = createChildren();
+			return b;
 		} else {
-			for(Shape s:children) {
-				s.addLevel();
+			for (Shape s:children) {
+				b = s.addLevel();
 			}
 		}
-		
-		//to-do later
-		//return false if spiral has reached size constraint
-		return false;
+		return b;
 	}
 	
 	public boolean removeLevel() {
+		boolean b = false;
 		if(this.gen==1 && children[0]==null) {
 			//cannot remove level when there is only 1 level
-			return false;
+			return b;
 		}else if(children[0].getChildren()[0]==null){
 			//if the children array of the index 0 child in this object's children array is null 
 			children[0]=null;
-			return true;
+			b = true;
+			return b;
 		}else {
 			//go a level deeper deeper
 			for(Shape s:children) {
-				return s.removeLevel();
+				b = s.removeLevel();
 			}
 		}
-		return false;
+		return b;
 	}
 
 	public int getLevel() {
