@@ -6,14 +6,17 @@ import java.awt.Color;
  * int x,y for (x,y) coordinates,
  * Color c for the color of the shape, and
  * int size used to calculate the height and width values of the instantiated shape.
+ * Shape[] children to store a level of child shapes.
  */
 public abstract class AbstractShape implements Shape {
-
-	protected int x, y, size;
+	//geometric properties
+	int x, y;
 	Color c;
-
-	// the children of this shape
+	int size;
+	//an array of children shapes a level below the parent shape
 	protected Shape[] children;
+	//generation of shape. 1 by default
+	int gen;
 
 	public AbstractShape(int x, int y, Color c, int size) {
 		this.x = x;
@@ -23,48 +26,59 @@ public abstract class AbstractShape implements Shape {
 	}
 
 	/**
-	 * Since the model has only a reference to the top level shapes, 
-	 * the method will iterate to get to the last level of the shape 
-	 * that was selected by the mouse click. Do so by using recursion 
-	 * (don't use any loop, except to loop over the elements of the array 
-	 * of children in a current level.
-	 * iterate by using recursion (that is don't use any loop, 
-	 * except to loop over the elements of the array of children in a current level.) 
+	 * add a level of children shapes 
+	 * @return
 	 */
-	@Override
 	public boolean addLevel() {
 		if (children[0] == null) {
-			createChildren();
+			return createChildren();
 		} else {
-			for (Shape child : children) {
-				child.addLevel();
+			for(Shape s:children) {
+				s.addLevel();
+			}
+		}
+		
+		//to-do later
+		//return false if spiral has reached size constraint
+		return false;
+	}
+	
+	public boolean removeLevel() {
+		if(this.gen==1 && children[0]==null) {
+			//cannot remove level when there is only 1 level
+			return false;
+		}else if(children[0].getChildren()[0]==null){
+			//if the children array of the index 0 child in this object's children array is null 
+			children[0]=null;
+			return true;
+		}else {
+			//go a level deeper deeper
+			for(Shape s:children) {
+				return s.removeLevel();
 			}
 		}
 		return false;
 	}
 
-	/**
-	 * It will do so by setting to null the elements of the array of children for the last current level.
-	 * Contrary to the addLevel method, removeLevel won't iterate to the last level of the selected shape.
-	 * It will iterate to the level preceding the last level. 
-	 * This is because to remove the last level, the method needs to set to null the elements of the 
-	 * array of children that refer to that last level. 
-	 * If the shape that is displayed is at level 1, a level can't be removed.
-	 * In that case, return false to the model. In all other cases, return true to the model.
-	 * The boolean value will be passed on to the controller so that it can display a message box 
-	 * if a level could not be removed.
-	 */
-	@Override
-	public boolean removeLevel() {
-		// TODO Auto-generated method stub
-		return false;
+	public int getLevel() {
+		if(children[0]==null) {
+			return 1;
+		}else {
+			return children[0].getLevel() + 1;
+		}
 	}
 
-	// It should give the type of the shape (FibonacciSquare or HShape available by calling getClass()), 
-	// the coordinates of the shape, its color and its current level.
-	@Override
+	public Shape[] getChildren() {
+		return children;
+	}
+
+
 	public String toString() {
-		return (getClass() + ": {" + "x: " + this.x + ", y: " + this.y + ", color: " + this.c.toString()
-		+ ", level: " +  "}");
+		return ("[" + this.getClass() + ", x: " + this.x + ", y: " + this.y
+				+ ", color: " + this.c.toString() + ", level: " + getLevel() + "];");
+	}
+
+	public boolean contains(int x, int y) {
+		return ((x > this.x && x < this.x+this.size) && (y > this.y && y < this.y+this.size));
 	}
 }

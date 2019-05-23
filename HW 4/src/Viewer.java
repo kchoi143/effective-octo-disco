@@ -7,22 +7,16 @@ public class Viewer extends JPanel implements View {
   
   // The model this View is connected to
   private DrawingModel model;
-
+  
   public Viewer() {
     setBackground(Color.WHITE);
   }
 
   @Override
   public void update(DrawingModel model) {
-	  if (model.getShapes().size() == 10) {
-		  System.out.println("------------\nUpdate Called\n------------");
-	      for (Shape s : model.getShapes()) {
-	          System.out.println(s.toString());
-	        }
+	  this.model = model;
+	  repaint(); // will eventually call paintComponent
 	  }
-    this.model = model;
-    repaint(); // will eventually call paintComponent
-  }
   
   //Never call paintComponent directly as the interaction with the OS is unclear. 
   //Always use repaint()

@@ -60,17 +60,13 @@ public class MainClass {
 	// Show it (execute this line last)
 	frame.setVisible(true);
 	
-	// Create 10 shapes
-	// (possibly create another shape if one created goes beyond boundaries)
-	Random rand = new Random();
-	for(int i = 1; i <= 10; i ++) {
-		if (Math.random() >= 0.5) {
-			model.addShape(new HShape(rand.nextInt(panel.getWidth())+1, rand.nextInt(panel.getHeight())+1, 
-					new Color(rand.nextInt(0xFFFFFF)), rand.nextInt(100)+1));
-		} else {
-			model.addShape(new FibonacciSquare(rand.nextInt(panel.getWidth())+1, rand.nextInt(panel.getHeight())+1,
-					new Color(rand.nextInt(0xFFFFFF)), rand.nextInt(4)+1, rand.nextInt(7)+5));
-		}
-	}
+	Shape gp = new FibonacciSquare(350, 250, Color.BLUE, 3, 6);
+    model.addShape(gp);
+    
+    Shape h1 = new HShape(500, 200, Color.GREEN, 400);
+    model.addShape(h1);
+    
+	TextViewer text = new TextViewer();
+	model.addView(text);
   }
 }

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class Controller extends JPanel implements ActionListener, MouseListener {
 	private DrawingModel model;
-	private boolean addLevel;
+	private boolean addLevel = true;
 
 	// Connect controller and model (in the constructor)
 	public Controller(DrawingModel model) {

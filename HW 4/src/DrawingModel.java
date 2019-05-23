@@ -18,8 +18,6 @@ public class DrawingModel {
 	private List<Shape> shapes = new ArrayList<Shape>();
 	// the list of the views connected to this model
 	private List<View> views = new ArrayList<View>();
-	// old list of shapes
-	private List<Shape> oldShapes = new ArrayList<Shape>();
 
 	// A client should be able to add a Shape to the model
 	public void addShape(Shape s) {
@@ -50,6 +48,9 @@ public class DrawingModel {
 			// if (x,y) is within s, add a level to s
 			if (s.contains(x,y)) {
 				b = s.addLevel();
+				if (b) {
+					updateAll();
+				}
 			}
 		}
 		return b;
@@ -61,6 +62,9 @@ public class DrawingModel {
 			// if (x,y) is within s, remove a level from s
 			if (s.contains(x,y)) {
 				b = s.removeLevel();
+				if (b) {
+					updateAll();
+				}
 			}
 		}
 		return b;
