@@ -1,4 +1,7 @@
-
+/**
+ * Prints out the class, x, y, color, and level of the parent shapes
+ * to the console whenever they are updated by the viewer.
+ */
 public class TextViewer implements View {
 
 	@Override

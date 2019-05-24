@@ -28,7 +28,6 @@ public class Controller extends JPanel implements ActionListener, MouseListener 
 			addLevel = false;
 		} else {
 			model.reset();
-			// has to be reset
 		}
 	}
 
